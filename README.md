@@ -21,7 +21,7 @@ https://github.com/giampaolo/psutil
 * In that file put a string variable `telegrambot` which equals your key
  * For example: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
  
- # PLEASE CONTRIBUTE !:)
+# PLEASE CONTRIBUTE !:)
  I threw this code together within 10 minutes or so as a mockup to work on it later. But I think it's a nice bot idea and some of you guys might like this too. So please feel free to fork, pull, requests features!
  Can give contributers access!
  Would really love to see this bot grow some fat and brain:)
