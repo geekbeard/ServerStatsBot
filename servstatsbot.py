@@ -3,7 +3,6 @@ import telepot
 import time
 import psutil
 from datetime import datetime
-# from subprocess import call
 from subprocess import Popen, PIPE, STDOUT
 
 memorythreshold = 85  # If memory usage more this %
@@ -53,7 +52,7 @@ class YourBot(telepot.Bot):
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
                 elif msg['text'] == "Stop":
                     clearall(chat_id)
-                    bot.sendMessage(chat_id, "All operations stopped.")
+                    bot.sendMessage(chat_id, "All operations stopped.", reply_markup=hide_keyboard)
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
                     bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
@@ -80,7 +79,6 @@ while 1:
         tr = 0
         memck = psutil.virtual_memory()
         mempercent = memck.percent
-        # print(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
             memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
