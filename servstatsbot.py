@@ -21,7 +21,10 @@ class YourBot(telepot.Bot):
                 # reply =
                 memory = psutil.virtual_memory()
                 disk = psutil.disk_usage('/')
-                boottime = datetime.fromtimestamp(psutil.boot_time())
+                try:
+                    boottime = datetime.fromtimestamp(psutil.get_boot_time())
+                except:
+                    boottime = datetime.fromtimestamp(psutil.boot_time())
                 now = datetime.now()
                 timedif = "Online for: %.1f Hours" % (((now - boottime).total_seconds()) / 3600)
                 # print(timedif)
