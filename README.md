@@ -1,6 +1,13 @@
 # Server Stats Bot
 
-A Telegram bot which monitors the status of your server and responds with statistics if asked to and also notifies you about critical events.
+A Telegram Bot:
+
+* Commands
+    * /stats - gives summed statistics about memory \ disk \ processes (will improve)
+    * /shell - goes into the mode of executing shell commands & sends you the output
+    * /memgraph - plots a graph of memory usage for a past period and sends you a picture of the graph
+* Monitors memory usage and if it reaches above the set threshold = sends you warning message
+
 
 ![Bot](http://i.imgur.com/RnVdXlB.png)
 
@@ -15,6 +22,9 @@ A Telegram bot which monitors the status of your server and responds with statis
         * `sudo python3 get-pip.py`
         * After that `pip install psutil`
         * Also Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
+* [matplotlib](http://matplotlib.org/)
+    * `pip install matplotlib` (54 mb!)
+   
         
 
 # Bot key

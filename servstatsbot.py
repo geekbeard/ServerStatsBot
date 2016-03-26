@@ -1,6 +1,7 @@
 from tokens import *
 import telepot
 import time
+import matplotlib.pyplot as plt
 import psutil
 from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
@@ -8,12 +9,29 @@ from subprocess import Popen, PIPE, STDOUT
 memorythreshold = 85  # If memory usage more this %
 
 shellexecution = []
+timelist = []
+memlist = []
+xaxis = []
+
 stopmarkup = {'keyboard': [['Stop']]}
 hide_keyboard = {'hide_keyboard': True}
 
 def clearall(chat_id):
     if chat_id in shellexecution:
         shellexecution.remove(chat_id)
+
+def plotmemgraph(memlist, xaxis, tmperiod):
+    print(memlist)
+    print(xaxis)
+    plt.xlabel(tmperiod)
+    plt.ylabel('% Used')
+    plt.title('Memory Usage Graph')
+    plt.plot(xaxis, memlist, 'ro')
+    plt.axis([0, len(xaxis), 0, 100])
+    plt.savefig('graph.png')
+    f = open('graph.png', 'rb')  # some file on local disk
+    return f
+
 
 class YourBot(telepot.Bot):
     def handle(self, msg):
@@ -64,6 +82,11 @@ class YourBot(telepot.Bot):
                         bot.sendMessage(chat_id, output, disable_web_page_preview=True)
                     else:
                         bot.sendMessage(chat_id, "No output.", disable_web_page_preview=True)
+                elif msg['text'] == '/memgraph':
+                    bot.sendChatAction(chat_id, 'typing')
+                    tmperiod = "Last %.2f hours" % ((datetime.now() - graphstart).total_seconds() / 3600)
+                    bot.sendPhoto(chat_id, plotmemgraph(memlist, xaxis, tmperiod))
+
 
 
 TOKEN = telegrambot
@@ -71,15 +94,27 @@ TOKEN = telegrambot
 bot = YourBot(TOKEN)
 bot.notifyOnMessage()
 tr = 0
+xx = 0
 # Keep the program running.
 while 1:
-    time.sleep(10)  # 10 seconds
-    tr += 10
+    graphstart = datetime.now()
     if tr == 30:
         tr = 0
+        timenow = datetime.now()
+        # tm = str(timenow.hour).zfill(2)+":"+str(timenow.minute).zfill(2)+":"+str(timenow.second).zfill(2)
+        # print(tm)
+        # timelist.append(tm)
+        xaxis.append(xx)
+        xx += 1
         memck = psutil.virtual_memory()
         mempercent = memck.percent
+        memlist.append(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
             memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
-            bot.sendMessage(86298829, "CRITICAL! LOW MEMORY!\n" + memavail)
+            graphend = datetime.now()
+            tmperiod = "Last %.2f hours" % ((graphend - graphstart).total_seconds() / 3600)
+            bot.sendMessage(adminchatid, "CRITICAL! LOW MEMORY!\n" + memavail)
+            bot.sendPhoto(adminchatid, plotmemgraph(memlist, xaxis, tmperiod))
+    time.sleep(10)  # 10 seconds
+    tr += 10
