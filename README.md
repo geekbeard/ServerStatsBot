@@ -3,9 +3,9 @@
 A Telegram Bot:
 
 * Commands
-    * /stats - gives summed statistics about memory \ disk \ processes (will improve)
-    * /shell - goes into the mode of executing shell commands & sends you the output
-    * /memgraph - plots a graph of memory usage for a past period and sends you a picture of the graph
+    * `/stats` - gives summed statistics about memory \ disk \ processes (will improve)
+    * `/shell` - goes into the mode of executing shell commands & sends you the output
+    * `/memgraph` - plots a graph of memory usage for a past period and sends you a picture of the graph
 * Monitors memory usage and if it reaches above the set threshold = sends you warning message
 
 
