@@ -23,7 +23,7 @@ A Telegram Bot:
         * After that `pip install psutil`
         * Also Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
 * [matplotlib](http://matplotlib.org/)
-    * `pip install matplotlib` (54 mb!)
+    * `sudo apt-get install python3-matplotlib`
    
         
 
