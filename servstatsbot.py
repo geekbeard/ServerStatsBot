@@ -1,10 +1,14 @@
 from tokens import *
 import telepot
 import time
+import matplotlib
+matplotlib.use("Agg") # has to be before any other matplotlibs imports to set a "headless" backend
 import matplotlib.pyplot as plt
 import psutil
 from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
+
+
 
 memorythreshold = 85  # If memory usage more this %
 
