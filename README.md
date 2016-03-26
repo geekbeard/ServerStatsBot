@@ -6,11 +6,15 @@ A Telegram bot which monitors the status of your server and responds with statis
 
 # Requires
 
-https://github.com/nickoala/telepot
-
-and
-
-https://github.com/giampaolo/psutil
+* Pytho 3+
+* https://github.com/nickoala/telepot
+* https://github.com/giampaolo/psutil
+    * Make sure to install it for Python 3+
+    * In order to make sure that `pip` installs packages for the 3+ version:
+        * `curl -O https://bootstrap.pypa.io/get-pip.py`
+        * `sudo python3 get-pip.py`
+        * After that `pip install psutil`
+        
 
 # Bot key
 (lame way to keep the key safe)
@@ -23,7 +27,7 @@ https://github.com/giampaolo/psutil
  
 # PLEASE CONTRIBUTE !:)
  I threw this code together within 10 minutes or so as a mockup to work on it later. But I think it's a nice bot idea and some of you guys might like this too. So please feel free to fork, pull, requests features!
- Can give contributers access!
+ Can give contributors access!
  Would really love to see this bot grow some fat and brain:)
  
  
