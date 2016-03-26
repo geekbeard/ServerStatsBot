@@ -9,7 +9,14 @@ A Telegram Bot:
 * Monitors memory usage and if it reaches above the set threshold = sends you warning message
 
 
+Example summary: (will improve)
+
 ![Bot](http://i.imgur.com/RnVdXlB.png)
+
+
+Example graph sent by bot:
+
+![Graph](http://i.imgur.com/Iho9Hgl.jpg?1)
 
 # Requires
 
