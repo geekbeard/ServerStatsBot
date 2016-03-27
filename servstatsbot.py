@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import psutil
 from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
+import operator
 
 
 
@@ -36,7 +37,6 @@ def plotmemgraph(memlist, xaxis, tmperiod):
     memthresholdarr = []
     for xas in xaxis:
         memthresholdarr.append(memorythreshold)
-
     plt.plot(xaxis, memlist, 'b-', xaxis, memthresholdarr, 'r--')
     plt.axis([0, len(xaxis)-1, 0, 100])
     plt.savefig('graph.png')
@@ -65,14 +65,21 @@ class YourBot(telepot.Bot):
                     diskused = "Disk used: " + str(disk.percent) + " %"
                     pids = psutil.pids()
                     pidsreply = ''
+                    procs = {}
                     for pid in pids:
                         p = psutil.Process(pid)
                         try:
                             pmem = p.memory_percent()
-                            if pmem > 1:
-                                    pidsreply += p.name() + " " + ("%.2f" % pmem) + " %\n"
+                            if pmem > 0.5:
+                                if p.name() in procs:
+                                    procs[p.name()] += pmem
+                                else:
+                                    procs[p.name()] = pmem
                         except:
                             None
+                    sortedprocs = sorted(procs.items(), key=operator.itemgetter(1), reverse=True)
+                    for proc in sortedprocs:
+                        pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
                     reply = timedif + "\n" + \
                             memtotal + "\n" + \
                             memavail + "\n" + \
@@ -112,9 +119,6 @@ while 1:
     if tr == poll:
         tr = 0
         timenow = datetime.now()
-        # tm = str(timenow.hour).zfill(2)+":"+str(timenow.minute).zfill(2)+":"+str(timenow.second).zfill(2)
-        # print(tm)
-        # timelist.append(tm)
         xaxis.append(xx)
         xx += 1
         memck = psutil.virtual_memory()
