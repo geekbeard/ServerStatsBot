@@ -21,9 +21,11 @@ Example shell command output as a message from the bot:
 
 Example graph sent by bot:
 
-![Graph](http://i.imgur.com/Iho9Hgl.jpg?1)
+![Graph](http://i.imgur.com/K8mG3aM.jpg?1)
 
-# Requires
+# Usage
+
+## Requirements 
 
 * Python 3+
 * [Telepot](https://github.com/nickoala/telepot)
@@ -37,10 +39,26 @@ Example graph sent by bot:
 * [matplotlib](http://matplotlib.org/)
     * `sudo apt-get install python3-matplotlib`
    
+## Running the bot
+
+`python3 servstatsbot.py`
+
+## Setting an admin
+
+You have to set a variable `adminchatid` in `tokens.py` to be equal your chat_id or multiple chat_id (if more people will use your bot).
+For example:
+
+* `adminchatid = [443355]`
+* `adminchatid = [443355, 55667788, 99884433]`
+
+I will reimplement this differently later.
         
 
 # Bot key
 (lame way to keep the key safe)
+
+Hide all the keys and admin variables in `tokens.py`.
+Use it only for sensitive variables. Avoid creating functions not to clutter the namespaces through the import.
 
 * Get a key from the [Bot Father](https://telegram.me/BotFather)
 * Clone that repo

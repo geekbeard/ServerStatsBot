@@ -11,6 +11,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 memorythreshold = 85  # If memory usage more this %
+poll = 30  # seconds
 
 shellexecution = []
 timelist = []
@@ -31,9 +32,15 @@ def plotmemgraph(memlist, xaxis, tmperiod):
     plt.xlabel(tmperiod)
     plt.ylabel('% Used')
     plt.title('Memory Usage Graph')
-    plt.plot(xaxis, memlist, 'ro')
-    plt.axis([0, len(xaxis), 0, 100])
+    plt.text(0.1*len(xaxis), memorythreshold+2, 'Threshold: '+str(memorythreshold)+ ' %')
+    memthresholdarr = []
+    for xas in xaxis:
+        memthresholdarr.append(memorythreshold)
+
+    plt.plot(xaxis, memlist, 'b-', xaxis, memthresholdarr, 'r--')
+    plt.axis([0, len(xaxis)-1, 0, 100])
     plt.savefig('graph.png')
+    plt.close()
     f = open('graph.png', 'rb')  # some file on local disk
     return f
 
@@ -43,7 +50,7 @@ class YourBot(telepot.Bot):
         content_type, chat_type, chat_id = telepot.glance2(msg)
         # Do your stuff according to `content_type` ...
         # print(chat_id)
-        if chat_id == adminchatid:  # Store adminchatid variable in tokens.py
+        if chat_id in adminchatid:  # Store adminchatid variable in tokens.py
             if content_type == 'text':
                 if msg['text'] == '/stats' and chat_id not in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
@@ -102,7 +109,7 @@ tr = 0
 xx = 0
 # Keep the program running.
 while 1:
-    if tr == 30:
+    if tr == poll:
         tr = 0
         timenow = datetime.now()
         # tm = str(timenow.hour).zfill(2)+":"+str(timenow.minute).zfill(2)+":"+str(timenow.second).zfill(2)
