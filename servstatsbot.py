@@ -16,6 +16,7 @@ shellexecution = []
 timelist = []
 memlist = []
 xaxis = []
+graphstart = datetime.now()
 
 stopmarkup = {'keyboard': [['Stop']]}
 hide_keyboard = {'hide_keyboard': True}
@@ -101,7 +102,6 @@ tr = 0
 xx = 0
 # Keep the program running.
 while 1:
-    graphstart = datetime.now()
     if tr == 30:
         tr = 0
         timenow = datetime.now()
