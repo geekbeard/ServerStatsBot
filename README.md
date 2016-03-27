@@ -11,7 +11,7 @@ A Telegram Bot:
 
 Example summary: (will improve)
 
-![Bot](http://i.imgur.com/RnVdXlB.png)
+![Bot](http://i.imgur.com/hXT0drx.png)
 
 
 Example shell command output as a message from the bot:
