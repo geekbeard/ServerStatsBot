@@ -1,4 +1,4 @@
-# Server Stats Bot
+# Server Manager Bot
 
 A Telegram Bot:
 
@@ -12,6 +12,11 @@ A Telegram Bot:
 Example summary: (will improve)
 
 ![Bot](http://i.imgur.com/RnVdXlB.png)
+
+
+Example shell command output as a message from the bot:
+
+![Shell](https://i.imgur.com/PtvcaSD.png)
 
 
 Example graph sent by bot:
