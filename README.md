@@ -9,17 +9,17 @@ A Telegram Bot:
 * Monitors memory usage and if it reaches above the set threshold = sends you warning message
 
 
-Example summary: (will improve)
+Example summary: [Gif](http://i.imgur.com/AhCvy9W.gifv)
 
 ![Bot](http://i.imgur.com/RnVdXlB.png)
 
 
-Example shell command output as a message from the bot:
+Example shell command output as a message from the bot: 
 
 ![Shell](https://i.imgur.com/PtvcaSD.png)
 
 
-Example graph sent by bot:
+Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
 
 ![Graph](http://i.imgur.com/K8mG3aM.jpg?1)
 
@@ -42,6 +42,16 @@ Example graph sent by bot:
 ## Running the bot
 
 `python3 servstatsbot.py`
+
+## Running the bot as "daemon"
+
+* See included file in the repo: `servstatsbot.conf`
+    * Open it and edit the path as mentiond in the comments there
+* Place that file in `/etc/init/`
+* Start the "daemon" with: `start servstatsbot`
+    * You can start|stop|restart
+    * If bot crashes it'll be automatically restarted
+    * It will also start after reboot
 
 ## Setting an admin
 
