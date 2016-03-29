@@ -76,7 +76,7 @@ class YourBot(telepot.Bot):
                                 else:
                                     procs[p.name()] = pmem
                         except:
-                            None
+                            print("Hm")
                     sortedprocs = sorted(procs.items(), key=operator.itemgetter(1), reverse=True)
                     for proc in sortedprocs:
                         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"

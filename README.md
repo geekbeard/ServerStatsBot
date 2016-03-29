@@ -83,4 +83,10 @@ Use it only for sensitive variables. Avoid creating functions not to clutter the
  Would really love to see this bot grow some fat and brain:)
  
  
+# Other bot development
+ 
+## Alfred
+[http://alfredthebot.com](http://alfredthebot.com)
+ 
+ 
  GB
