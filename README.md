@@ -6,6 +6,7 @@ A Telegram Bot:
     * `/stats` - gives summed statistics about memory \ disk \ processes (will improve)
     * `/shell` - goes into the mode of executing shell commands & sends you the output
     * `/memgraph` - plots a graph of memory usage for a past period and sends you a picture of the graph
+    * `/setmem` - set memory threshold (%) to monitor and notify if memory usage goes above it
 * Monitors memory usage and if it reaches above the set threshold = sends you warning message
 
 
