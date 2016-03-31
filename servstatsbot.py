@@ -18,6 +18,7 @@ shellexecution = []
 timelist = []
 memlist = []
 xaxis = []
+settingmemth = []
 graphstart = datetime.now()
 
 stopmarkup = {'keyboard': [['Stop']]}
@@ -26,6 +27,8 @@ hide_keyboard = {'hide_keyboard': True}
 def clearall(chat_id):
     if chat_id in shellexecution:
         shellexecution.remove(chat_id)
+    if chat_id in settingmemth:
+        settingmemth.remove(chat_id)
 
 def plotmemgraph(memlist, xaxis, tmperiod):
     print(memlist)
@@ -93,6 +96,23 @@ class YourBot(telepot.Bot):
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
                     bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
+                elif msg['text'] == "/setmem" and chat_id not in settingmemth:
+                    bot.sendChatAction(chat_id, 'typing')
+                    settingmemth.append(chat_id)
+                    bot.sendMessage(chat_id, "Send me a new memory threshold to monitor?", reply_markup=stopmarkup)
+                elif chat_id in settingmemth:
+                    bot.sendChatAction(chat_id, 'typing')
+                    try:
+                        global memorythreshold
+                        memorythreshold = int(msg['text'])
+                        if memorythreshold < 100:
+                            bot.sendMessage(chat_id, "All set!")
+                            clearall(chat_id)
+                        else:
+                            1/0
+                    except:
+                        bot.sendMessage(chat_id, "Please send a proper numeric value below 100.")
+
                 elif chat_id in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
                     p = Popen(msg['text'], shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
@@ -129,7 +149,8 @@ while 1:
             memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
             graphend = datetime.now()
             tmperiod = "Last %.2f hours" % ((graphend - graphstart).total_seconds() / 3600)
-            bot.sendMessage(adminchatid, "CRITICAL! LOW MEMORY!\n" + memavail)
-            bot.sendPhoto(adminchatid, plotmemgraph(memlist, xaxis, tmperiod))
+            for adminid in adminchatid:
+                bot.sendMessage(adminid, "CRITICAL! LOW MEMORY!\n" + memavail)
+                bot.sendPhoto(adminid, plotmemgraph(memlist, xaxis, tmperiod))
     time.sleep(10)  # 10 seconds
     tr += 10
