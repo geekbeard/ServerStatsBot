@@ -30,6 +30,8 @@ def clearall(chat_id):
         shellexecution.remove(chat_id)
     if chat_id in settingmemth:
         settingmemth.remove(chat_id)
+    if chat_id in setpolling:
+        setpolling.remove(chat_id)
 
 def plotmemgraph(memlist, xaxis, tmperiod):
     print(memlist)
