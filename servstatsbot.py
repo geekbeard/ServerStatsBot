@@ -12,13 +12,14 @@ import operator
 
 
 memorythreshold = 85  # If memory usage more this %
-poll = 30  # seconds
+poll = 300  # seconds
 
 shellexecution = []
 timelist = []
 memlist = []
 xaxis = []
 settingmemth = []
+setpolling = []
 graphstart = datetime.now()
 
 stopmarkup = {'keyboard': [['Stop']]}
@@ -93,6 +94,22 @@ class YourBot(telepot.Bot):
                 elif msg['text'] == "Stop":
                     clearall(chat_id)
                     bot.sendMessage(chat_id, "All operations stopped.", reply_markup=hide_keyboard)
+                elif msg['text'] == '/setpoll' and chat_id not in setpolling:
+                    bot.sendChatAction(chat_id, 'typing')
+                    setpolling.append(chat_id)
+                    bot.sendMessage(chat_id, "Send me a new polling interval in seconds? (higher than 10)", reply_markup=stopmarkup)
+                elif chat_id in setpolling:
+                    bot.sendChatAction(chat_id, 'typing')
+                    try:
+                        global poll
+                        poll = int(msg['text'])
+                        if poll > 10:
+                            bot.sendMessage(chat_id, "All set!")
+                            clearall(chat_id)
+                        else:
+                            1/0
+                    except:
+                        bot.sendMessage(chat_id, "Please send a proper numeric value higher than 10.")
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
                     bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)

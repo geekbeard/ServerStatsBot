@@ -7,6 +7,7 @@ A Telegram Bot:
     * `/shell` - goes into the mode of executing shell commands & sends you the output
     * `/memgraph` - plots a graph of memory usage for a past period and sends you a picture of the graph
     * `/setmem` - set memory threshold (%) to monitor and notify if memory usage goes above it
+    * `/setpoll` - set polling interval in seconds (higher than 10)
 * Monitors memory usage and if it reaches above the set threshold = sends you warning message
 
 
