@@ -40,6 +40,15 @@ Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
         * Also Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
 * [matplotlib](http://matplotlib.org/)
     * `sudo apt-get install python3-matplotlib`
+* Bot key & `tokens.py`
+    * Hide all the keys and admin variables in `tokens.py`. Use it only for sensitive variables. Avoid creating functions not to clutter the namespaces through the import.
+
+    * Get a key from the [Bot Father](https://telegram.me/BotFather)
+    * Clone that repo
+    * In the folder with the cloned repo create a file `tokens.py`
+       * It's added to the `.gitignore` so you don't commit your own (and I don't commit mine:)
+    * In that file put a string variable `telegrambot` which equals your key
+       * For example: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
    
 ## Running the bot
 
@@ -65,19 +74,6 @@ For example:
 
 I will reimplement this differently later.
         
-
-# Bot key
-(lame way to keep the key safe)
-
-Hide all the keys and admin variables in `tokens.py`.
-Use it only for sensitive variables. Avoid creating functions not to clutter the namespaces through the import.
-
-* Get a key from the [Bot Father](https://telegram.me/BotFather)
-* Clone that repo
-* In the folder with the cloned repo create a file `tokens.py`
-    * It's added to the `.gitignore` so you don't commit your own (and I don't commit mine:)
-* In that file put a string variable `telegrambot` which equals your key
-    * For example: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
  
 # PLEASE CONTRIBUTE :)
  I threw this code together within 10 minutes or so as a mockup to work on it later. But I think it's a nice bot idea and some of you guys might like this too. So please feel free to fork, pull, requests features!
