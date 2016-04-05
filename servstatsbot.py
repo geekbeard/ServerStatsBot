@@ -8,6 +8,7 @@ import psutil
 from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 import operator
+import collections
 
 
 
@@ -162,7 +163,13 @@ while 1:
         xx += 1
         memck = psutil.virtual_memory()
         mempercent = memck.percent
-        memlist.append(mempercent)
+        if memlist.count() > 300:
+            memq = collections.deque(memlist)
+            memq.append(mempercent)
+            memq.pop()
+            memlist = memq
+        else:
+            memlist.append(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
             memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
