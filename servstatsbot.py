@@ -54,7 +54,7 @@ def plotmemgraph(memlist, xaxis, tmperiod):
 
 class YourBot(telepot.Bot):
     def handle(self, msg):
-        content_type, chat_type, chat_id = telepot.glance2(msg)
+        content_type, chat_type, chat_id = telepot.glance(msg)
         # Do your stuff according to `content_type` ...
         # print(chat_id)
         if chat_id in adminchatid:  # Store adminchatid variable in tokens.py
@@ -151,7 +151,7 @@ class YourBot(telepot.Bot):
 TOKEN = telegrambot
 
 bot = YourBot(TOKEN)
-bot.notifyOnMessage()
+bot.message_loop(bot.handle)
 tr = 0
 xx = 0
 # Keep the program running.
