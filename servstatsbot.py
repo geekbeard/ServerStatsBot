@@ -1,6 +1,4 @@
 from tokens import *
-import telepot
-import time
 import matplotlib
 matplotlib.use("Agg") # has to be before any other matplotlibs imports to set a "headless" backend
 import matplotlib.pyplot as plt
@@ -9,6 +7,14 @@ from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 import operator
 import collections
+# import sys
+import time
+# import threading
+# import random
+import telepot
+# from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardHide, ForceReply
+# from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+# from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 
 
 
@@ -35,8 +41,8 @@ def clearall(chat_id):
         setpolling.remove(chat_id)
 
 def plotmemgraph(memlist, xaxis, tmperiod):
-    print(memlist)
-    print(xaxis)
+    # print(memlist)
+    # print(xaxis)
     plt.xlabel(tmperiod)
     plt.ylabel('% Used')
     plt.title('Memory Usage Graph')
@@ -46,15 +52,20 @@ def plotmemgraph(memlist, xaxis, tmperiod):
         memthresholdarr.append(memorythreshold)
     plt.plot(xaxis, memlist, 'b-', xaxis, memthresholdarr, 'r--')
     plt.axis([0, len(xaxis)-1, 0, 100])
-    plt.savefig('graph.png')
+    plt.savefig('/tmp/graph.png')
     plt.close()
-    f = open('graph.png', 'rb')  # some file on local disk
+    f = open('/tmp/graph.png', 'rb')  # some file on local disk
     return f
 
 
 class YourBot(telepot.Bot):
-    def handle(self, msg):
-        content_type, chat_type, chat_id = telepot.glance2(msg)
+    def __init__(self, *args, **kwargs):
+        super(YourBot, self).__init__(*args, **kwargs)
+        self._answerer = telepot.helper.Answerer(self)
+        self._message_with_inline_keyboard = None
+
+    def on_chat_message(self, msg):
+        content_type, chat_type, chat_id = telepot.glance(msg)
         # Do your stuff according to `content_type` ...
         # print(chat_id)
         if chat_id in adminchatid:  # Store adminchatid variable in tokens.py
@@ -151,7 +162,7 @@ class YourBot(telepot.Bot):
 TOKEN = telegrambot
 
 bot = YourBot(TOKEN)
-bot.notifyOnMessage()
+bot.message_loop()
 tr = 0
 xx = 0
 # Keep the program running.
@@ -159,16 +170,17 @@ while 1:
     if tr == poll:
         tr = 0
         timenow = datetime.now()
-        xaxis.append(xx)
-        xx += 1
         memck = psutil.virtual_memory()
         mempercent = memck.percent
-        if memlist.count() > 300:
+        if len(memlist) > 300:
             memq = collections.deque(memlist)
             memq.append(mempercent)
-            memq.pop()
+            memq.popleft()
             memlist = memq
+            memlist = list(memlist)
         else:
+            xaxis.append(xx)
+            xx += 1
             memlist.append(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
