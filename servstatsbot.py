@@ -67,7 +67,7 @@ class YourBot(telepot.Bot):
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         # Do your stuff according to `content_type` ...
-        # print(chat_id)
+        print("Your chat_id:" + str(chat_id)) # this will tell you your chat_id
         if chat_id in adminchatid:  # Store adminchatid variable in tokens.py
             if content_type == 'text':
                 if msg['text'] == '/stats' and chat_id not in shellexecution:

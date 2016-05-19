@@ -1,0 +1,5 @@
+# A token you get from the Telegram's botfather
+telegrambot = '9999999:6666aaaaaa666666a6aaa'
+
+# A chat_id of your client
+adminchatid = [99999999]
