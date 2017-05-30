@@ -81,6 +81,7 @@ class YourBot(telepot.Bot):
                     memavail = "Available memory: %.2f GB" % (memory.available / 1000000000)
                     memuseperc = "Used memory: " + str(memory.percent) + " %"
                     diskused = "Disk used: " + str(disk.percent) + " %"
+                    cpu = "Current Usage CPU" + str(psutil.cpu_percent(interval=1)) + "%"
                     pids = psutil.pids()
                     pidsreply = ''
                     procs = {}
@@ -102,6 +103,7 @@ class YourBot(telepot.Bot):
                             memtotal + "\n" + \
                             memavail + "\n" + \
                             memuseperc + "\n" + \
+                            cpu + "\n" + \
                             diskused + "\n\n" + \
                             pidsreply
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
