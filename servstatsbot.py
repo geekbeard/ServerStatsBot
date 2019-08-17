@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 from tokens import *
 import matplotlib
 matplotlib.use("Agg") # has to be before any other matplotlibs imports to set a "headless" backend
@@ -12,7 +14,7 @@ import time
 # import threading
 # import random
 import telepot
-# from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardHide, ForceReply
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 # from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 # from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
 
@@ -29,7 +31,8 @@ settingmemth = []
 setpolling = []
 graphstart = datetime.now()
 
-stopmarkup = {'keyboard': [['Stop']]}
+stopmarkup = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Stop")]],resize_keyboard=True)
+# stopmarkup = {'keyboard': [['Stop']]}
 hide_keyboard = {'hide_keyboard': True}
 
 def clearall(chat_id):
@@ -44,9 +47,9 @@ def plotmemgraph(memlist, xaxis, tmperiod):
     # print(memlist)
     # print(xaxis)
     plt.xlabel(tmperiod)
-    plt.ylabel('% Used')
-    plt.title('Memory Usage Graph')
-    plt.text(0.1*len(xaxis), memorythreshold+2, 'Threshold: '+str(memorythreshold)+ ' %')
+    plt.ylabel('% использовано')
+    plt.title('График использования ОЗУ')
+    plt.text(0.1*len(xaxis), memorythreshold+2, 'Порог: '+str(memorythreshold)+ ' %')
     memthresholdarr = []
     for xas in xaxis:
         memthresholdarr.append(memorythreshold)
@@ -74,13 +77,18 @@ class YourBot(telepot.Bot):
                     bot.sendChatAction(chat_id, 'typing')
                     memory = psutil.virtual_memory()
                     disk = psutil.disk_usage('/')
+                    cpuget = psutil.getloadavg()
+                    cpufr = psutil.cpu_freq(percpu=False)
                     boottime = datetime.fromtimestamp(psutil.boot_time())
                     now = datetime.now()
-                    timedif = "Online for: %.1f Hours" % (((now - boottime).total_seconds()) / 3600)
-                    memtotal = "Total memory: %.2f GB " % (memory.total / 1000000000)
-                    memavail = "Available memory: %.2f GB" % (memory.available / 1000000000)
-                    memuseperc = "Used memory: " + str(memory.percent) + " %"
-                    diskused = "Disk used: " + str(disk.percent) + " %"
+                    cpuget = "<b>Среднаяя нагрузка CPU</b>: " + str(cpuget)
+                    cpufr = "<b>Текущая частота CPU</b>: " + str(cpufr.current) + "Mhz"
+                    timedif = "<b>Сервер работает уже</b>: %.1f часов" % (((now - boottime).total_seconds()) / 3600)
+                    memtotal = "<b>Всего ОЗУ</b>: %.2f GB " % (memory.total / 1000000000)
+                    memavail = "<b>Свободно ОЗУ</b>: %.2f GB" % (memory.available / 1000000000)
+                    memuseperc = "<b>Используется ОЗУ</b>: " + str(memory.percent) + " %"
+                    diskused = "<b>Использовано HDD</b>: " + str(disk.percent) + " %"
+
                     pids = psutil.pids()
                     pidsreply = ''
                     procs = {}
@@ -99,19 +107,21 @@ class YourBot(telepot.Bot):
                     for proc in sortedprocs:
                         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
                     reply = timedif + "\n" + \
+                            cpuget + "\n" + \
+                            cpufr + "\n" + \
                             memtotal + "\n" + \
                             memavail + "\n" + \
                             memuseperc + "\n" + \
                             diskused + "\n\n" + \
                             pidsreply
-                    bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
+                    bot.sendMessage(chat_id, reply, disable_web_page_preview=True, parse_mode='HTML')
                 elif msg['text'] == "Stop":
                     clearall(chat_id)
-                    bot.sendMessage(chat_id, "All operations stopped.", reply_markup=hide_keyboard)
+                    bot.sendMessage(chat_id, "Все операции остановлены", reply_markup=hide_keyboard)
                 elif msg['text'] == '/setpoll' and chat_id not in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     setpolling.append(chat_id)
-                    bot.sendMessage(chat_id, "Send me a new polling interval in seconds? (higher than 10)", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Отправить мне новый интервал опроса в секундах? (выше 10)", reply_markup=stopmarkup)
                 elif chat_id in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
@@ -125,7 +135,7 @@ class YourBot(telepot.Bot):
                     except:
                         bot.sendMessage(chat_id, "Please send a proper numeric value higher than 10.")
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
-                    bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Отправь мне Shell-комманду", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
                 elif msg['text'] == "/setmem" and chat_id not in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
@@ -153,11 +163,9 @@ class YourBot(telepot.Bot):
                     else:
                         bot.sendMessage(chat_id, "No output.", disable_web_page_preview=True)
                 elif msg['text'] == '/memgraph':
-                    bot.sendChatAction(chat_id, 'typing')
-                    tmperiod = "Last %.2f hours" % ((datetime.now() - graphstart).total_seconds() / 3600)
+                    bot.sendChatAction(chat_id, 'upload_photo')
+                    tmperiod = "За %.2f часа" % ((datetime.now() - graphstart).total_seconds() / 3600)
                     bot.sendPhoto(chat_id, plotmemgraph(memlist, xaxis, tmperiod))
-
-
 
 TOKEN = telegrambot
 
@@ -184,11 +192,11 @@ while 1:
             memlist.append(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
-            memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
+            memavail = "Доступно ОЗУ: %.2f GB" % (memck.available / 1000000000)
             graphend = datetime.now()
-            tmperiod = "Last %.2f hours" % ((graphend - graphstart).total_seconds() / 3600)
+            tmperiod = "За последние %.2f часов" % ((graphend - graphstart).total_seconds() / 3600)
             for adminid in adminchatid:
-                bot.sendMessage(adminid, "CRITICAL! LOW MEMORY!\n" + memavail)
+                bot.sendMessage(adminid, "ВНИМАНИЕ! МАЛО ОПЕРАТИВНОЙ ПАМЯТИ!\n" + memavail)
                 bot.sendPhoto(adminid, plotmemgraph(memlist, xaxis, tmperiod))
     time.sleep(10)  # 10 seconds
     tr += 10
