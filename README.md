@@ -1,19 +1,19 @@
 # Server Manager Bot
 
-A Telegram Bot:
+Этот Telegram бот умеет:
 
-* Commands
-    * `/stats` - gives summed statistics about memory \ disk \ processes (will improve)
-    * `/shell` - goes into the mode of executing shell commands & sends you the output
-    * `/memgraph` - plots a graph of memory usage for a past period and sends you a picture of the graph
-    * `/setmem` - set memory threshold (%) to monitor and notify if memory usage goes above it
-    * `/setpoll` - set polling interval in seconds (higher than 10)
-* Monitors memory usage and if it reaches above the set threshold = sends you warning message
+* Комманды
+    * `/stats` - дает обобщенную статистику о памяти \ диске \ процессах.
+    * `/shell` - позволяет использовать бот в режиме Shell.
+    * `/memgraph` - строит график использования памяти за прошедший период и отправляет вам изображение графика.
+    * `/setmem` - возможность установить порог оперативной памяти (%) для мониторинга.
+    * `/setpoll` - интервал опроса в секундах (выше 10).
+* Отслеживает использование памяти и, если она превышает установленное пороговое значение =, отправляет вам предупреждение.
 
 
-Example summary: [Gif](http://i.imgur.com/AhCvy9W.gifv)
+Как это работает: [Gif](https://i.13.wf/2019/08/17/1566074720-2541.gif)
 
-![Bot](http://i.imgur.com/hXT0drx.png)
+![Bot](https://i.13.wf/2019/08/17/1566074746-9489.png)
 
 
 Example shell command output as a message from the bot: 
