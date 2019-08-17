@@ -16,31 +16,31 @@
 ![Bot](https://i.13.wf/2019/08/17/1566074746-9489.png)
 
 
-Example shell command output as a message from the bot: 
+Пример вывода команды shell от бота:
 
 ![Shell](https://i.imgur.com/PtvcaSD.png)
 
 
-Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
+Пример графика: [Gif](http://i.imgur.com/anX7rJR.gifv)
 
 ![Graph](http://i.imgur.com/K8mG3aM.jpg?1)
 
-# Usage
+# Использование
 
-## Requirements 
+## Требования
 
 * Python 3+
 * [Telepot](https://github.com/nickoala/telepot)
 * [Psutil](https://github.com/giampaolo/psutil)
-    * Make sure to install it for Python 3+
-    * In order to make sure that `pip` installs packages for the 3+ version:
+    * Не забудьте установить его для Python 3+.
+    * Чтобы убедиться, что `pip`устанавливает пакеты для версии 3+:
         * `curl -O https://bootstrap.pypa.io/get-pip.py`
         * `sudo python3 get-pip.py`
-        * After that `pip install psutil`
+        * После этого установите `pip install psutil`
         * Also Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
 * [matplotlib](http://matplotlib.org/)
     * `sudo apt-get install python3-matplotlib`
-* Bot key & `tokens.py`
+* Токен бота & `tokens.py`
     * Hide all the keys and admin variables in `tokens.py`. Use it only for sensitive variables. Avoid creating functions not to clutter the namespaces through the import.
     * Get a key from the [Bot Father](https://telegram.me/BotFather)
     * Clone that repo
@@ -49,11 +49,11 @@ Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
     * In that file put a string variable `telegrambot` which equals your key
        * For example: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
    
-## Running the bot
+## Запуск
 
 `python3 servstatsbot.py`
 
-## Running the bot as "daemon"
+## Запуск в режиме "daemon"
 
 * See included file in the repo: `servstatsbot.conf`
     * Open it and edit the path as mentiond in the comments there
@@ -63,7 +63,7 @@ Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
     * If bot crashes it'll be automatically restarted
     * It will also start after reboot
 
-## Setting an admin
+## Настройка администратора
 
 You have to set a variable `adminchatid` in `tokens.py` to be equal your chat_id or multiple chat_id (if more people will use your bot).
 For example:
@@ -84,6 +84,5 @@ I will reimplement this differently later.
  
 ## Alfred
 [http://alfredthebot.com](http://alfredthebot.com)
- 
- 
- GB
+## vladios13
+[Blog vladios13](http://blog.vladios13.com)
