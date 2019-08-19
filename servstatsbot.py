@@ -20,8 +20,8 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 
 
 
-memorythreshold = 85  # If memory usage more this %
-poll = 300  # seconds
+memorythreshold = 85  # Если потребляется больше памяти, то этот % равен:
+poll = 300  # секунды
 
 shellexecution = []
 timelist = []
@@ -57,7 +57,7 @@ def plotmemgraph(memlist, xaxis, tmperiod):
     plt.axis([0, len(xaxis)-1, 0, 100])
     plt.savefig('/tmp/graph.png')
     plt.close()
-    f = open('/tmp/graph.png', 'rb')  # some file on local disk
+    f = open('/tmp/graph.png', 'rb')  # файл изображние на локальном диске
     return f
 
 
@@ -70,8 +70,8 @@ class YourBot(telepot.Bot):
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         # Do your stuff according to `content_type` ...
-        print("Your chat_id:" + str(chat_id)) # this will tell you your chat_id
-        if chat_id in adminchatid:  # Store adminchatid variable in tokens.py
+        print("Ваш chat_id:" + str(chat_id)) # узнать chat_id
+        if chat_id in adminchatid:  # Переменная adminchatid хранится в tokens.py
             if content_type == 'text':
                 if msg['text'] == '/stats' and chat_id not in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
@@ -133,26 +133,26 @@ class YourBot(telepot.Bot):
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Please send a proper numeric value higher than 10.")
+                        bot.sendMessage(chat_id, "Пожалуйста, отправьте числовое значение выше 10.")
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
                     bot.sendMessage(chat_id, "Отправь мне Shell-комманду", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
                 elif msg['text'] == "/setmem" and chat_id not in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     settingmemth.append(chat_id)
-                    bot.sendMessage(chat_id, "Send me a new memory threshold to monitor?", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Установи новый порог памяти для мониторинга", reply_markup=stopmarkup)
                 elif chat_id in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
                         global memorythreshold
                         memorythreshold = int(msg['text'])
                         if memorythreshold < 100:
-                            bot.sendMessage(chat_id, "All set!")
+                            bot.sendMessage(chat_id, "Все получилось!")
                             clearall(chat_id)
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Please send a proper numeric value below 100.")
+                        bot.sendMessage(chat_id, "Пожалуйста, отправь числовое значение ниже 100.")
 
                 elif chat_id in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
@@ -161,7 +161,7 @@ class YourBot(telepot.Bot):
                     if output != b'':
                         bot.sendMessage(chat_id, output, disable_web_page_preview=True)
                     else:
-                        bot.sendMessage(chat_id, "No output.", disable_web_page_preview=True)
+                        bot.sendMessage(chat_id, "Упс.", disable_web_page_preview=True)
                 elif msg['text'] == '/memgraph':
                     bot.sendChatAction(chat_id, 'upload_photo')
                     tmperiod = "За %.2f часа" % ((datetime.now() - graphstart).total_seconds() / 3600)
