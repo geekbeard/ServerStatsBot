@@ -21,7 +21,7 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 
 
 memorythreshold = 85  # Если потребляется больше памяти, то этот % равен:
-poll = 300  # секунды
+poll = 300  # значения в секундах
 
 shellexecution = []
 timelist = []
@@ -31,7 +31,7 @@ settingmemth = []
 setpolling = []
 graphstart = datetime.now()
 
-stopmarkup = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Stop")]],resize_keyboard=True)
+stopmarkup = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Stop Shell")]],resize_keyboard=True)
 # stopmarkup = {'keyboard': [['Stop']]}
 hide_keyboard = {'hide_keyboard': True}
 
@@ -78,16 +78,21 @@ class YourBot(telepot.Bot):
                     memory = psutil.virtual_memory()
                     disk = psutil.disk_usage('/')
                     cpuget = psutil.getloadavg()
+                    сpu_countF = psutil.cpu_count(logical=False)
+                    сpu_countL = psutil.cpu_count(logical=True)
                     cpufr = psutil.cpu_freq(percpu=False)
                     boottime = datetime.fromtimestamp(psutil.boot_time())
                     now = datetime.now()
-                    cpuget = "<b>Среднаяя нагрузка CPU</b>: " + str(cpuget)
+                    cpuget = "<b>Средняя нагрузка CPU</b>: " + str(cpuget)
                     cpufr = "<b>Текущая частота CPU</b>: " + str(cpufr.current) + "Mhz"
+                    сpu_countF = "<b>Физических ядер</b>: " + str(сpu_countF)
+                    сpu_countL = "<b>Логических ядер</b>: " + str(сpu_countL)
                     timedif = "<b>Сервер работает уже</b>: %.1f часов" % (((now - boottime).total_seconds()) / 3600)
                     memtotal = "<b>Всего ОЗУ</b>: %.2f GB " % (memory.total / 1000000000)
                     memavail = "<b>Свободно ОЗУ</b>: %.2f GB" % (memory.available / 1000000000)
                     memuseperc = "<b>Используется ОЗУ</b>: " + str(memory.percent) + " %"
                     diskused = "<b>Использовано HDD</b>: " + str(disk.percent) + " %"
+                    pidsinf = "<u>Текущие процессы:</u>"
 
                     pids = psutil.pids()
                     pidsreply = ''
@@ -110,9 +115,12 @@ class YourBot(telepot.Bot):
                             cpuget + "\n" + \
                             cpufr + "\n" + \
                             memtotal + "\n" + \
+                            сpu_countF + "\n" + \
+                            сpu_countL + "\n" + \
                             memavail + "\n" + \
                             memuseperc + "\n" + \
                             diskused + "\n\n" + \
+                            pidsinf + "\n" + \
                             pidsreply
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True, parse_mode='HTML')
                 elif msg['text'] == "Stop":
