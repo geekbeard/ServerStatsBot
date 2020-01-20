@@ -107,7 +107,7 @@ class YourBot(telepot.Bot):
                                 else:
                                     procs[p.name()] = pmem
                         except:
-                            print("Hm")
+                            print("ХМ?")
                     sortedprocs = sorted(procs.items(), key=operator.itemgetter(1), reverse=True)
                     for proc in sortedprocs:
                         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
@@ -129,7 +129,7 @@ class YourBot(telepot.Bot):
                 elif msg['text'] == '/setpoll' and chat_id not in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     setpolling.append(chat_id)
-                    bot.sendMessage(chat_id, "Отправить мне новый интервал опроса в секундах? (выше 10)", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Отправьте мне новый интервал проверки в секундах? (выше 10)", reply_markup=stopmarkup)
                 elif chat_id in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
@@ -141,14 +141,14 @@ class YourBot(telepot.Bot):
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Пожалуйста, отправьте числовое значение выше 10.")
+                        bot.sendMessage(chat_id, "Отправьте числовое значение выше 10.")
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
-                    bot.sendMessage(chat_id, "Отправь мне Shell-комманду", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Отправьте мне Shell-комманду", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
                 elif msg['text'] == "/setmem" and chat_id not in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     settingmemth.append(chat_id)
-                    bot.sendMessage(chat_id, "Установи новый порог памяти для мониторинга", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "Установите новый порог памяти для мониторинга", reply_markup=stopmarkup)
                 elif chat_id in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
@@ -160,7 +160,7 @@ class YourBot(telepot.Bot):
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Пожалуйста, отправь числовое значение ниже 100.")
+                        bot.sendMessage(chat_id, "Пожалуйста, отправьте числовое значение ниже 100.")
 
                 elif chat_id in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
