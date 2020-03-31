@@ -52,7 +52,7 @@
 
 `python3 servstatsbot.py`
 
-## 将机器人作为进程运行
+## 将bot作为进程运行
 
 * 参见文件: `servstatsbot.conf`
     * 根据文件内注释指示更改路径
