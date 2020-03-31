@@ -1,5 +1,23 @@
 # Server Manager Bot
 
+原项目详见fork源，您正在看的这个repo某种意义上属于二开版，Working in progress之后是原readme的完整
+翻译，也可以当做部署教程，实际上，这个repo只是比原repo多几个功能+汉化而已。
+
+2020-3-31新增
+输入/start或/help或help时回复所有可用的命令。
+
+Known Issue
+* 机器人新上线一段时间内绘制图标x轴为负数，过一段时间后恢复正常。
+* 设置新阈值或探测间隔，收到新消息后不会自动stop。
+
+Working in Progress
+* 开机以来所用流量功能
+* 当前网速
+* 磁盘使用详细情况
+* 重启/掉进程后上线提示
+
+欢迎与我或原作者（找不到人了）发邮件探讨/提issue！
+
 功能：
 * 命令
     * `/stats` - 检查磁盘/CPU/内存使用情况（正在完善中）
@@ -46,8 +64,9 @@
     * 在本地文件夹内新建文件`tokens.py`
        * 已经加入`.gitignore`豪华套餐,所以谁的key/token都不会提交上来
     * 将`telegrambot`后字符串换成自己的token
-       * 如: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
-   
+       * 如: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    * 编者按：原readme中的确是这样写的，但作者更新的时候可能忘了改了，这里直接vim编辑tokens.py_example再mv重命名去掉_example就可以了。
+     
 ## 开始运行
 
 `python3 servstatsbot.py`
