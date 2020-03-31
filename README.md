@@ -44,7 +44,7 @@
     * 从@Bot Father新建机器人/获取token[Bot Father](https://telegram.me/BotFather)
     * 克隆该仓库
     * 在本地文件夹内新建文件`tokens.py`
-       * 已经加入`.gitignore`豪华套餐所以谁的key/token都不会提交上来
+       * 已经加入`.gitignore`豪华套餐,所以谁的key/token都不会提交上来
     * 将`telegrambot`后字符串换成自己的token
        * 如: `telegrambot = "000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
    
