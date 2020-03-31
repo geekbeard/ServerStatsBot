@@ -76,11 +76,11 @@ class YourBot(telepot.Bot):
                     disk = psutil.disk_usage('/')
                     boottime = datetime.fromtimestamp(psutil.boot_time())
                     now = datetime.now()
-                    timedif = "Online for: %.1f Hours" % (((now - boottime).total_seconds()) / 3600)
-                    memtotal = "Total memory: %.2f GB " % (memory.total / 1000000000)
-                    memavail = "Available memory: %.2f GB" % (memory.available / 1000000000)
-                    memuseperc = "Used memory: " + str(memory.percent) + " %"
-                    diskused = "Disk used: " + str(disk.percent) + " %"
+                    timedif = "在线时间: %.1f 小时" % (((now - boottime).total_seconds()) / 3600)
+                    memtotal = "总内存: %.2f GB " % (memory.total / 1000000000)
+                    memavail = "可用内存: %.2f GB" % (memory.available / 1000000000)
+                    memuseperc = "使用内存: " + str(memory.percent) + " %"
+                    diskused = "磁盘占用: " + str(disk.percent) + " %"
                     pids = psutil.pids()
                     pidsreply = ''
                     procs = {}
@@ -105,44 +105,52 @@ class YourBot(telepot.Bot):
                             diskused + "\n\n" + \
                             pidsreply
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
+                elif msg['text'] == "help" or msg['text'] == "help" or msg['text'] == "/start":
+                    bot.sendMessage(chat_id, "以下命令可用")
+                    bot.sendMessage(chat_id, "/stats -检查磁盘/CPU/内存使用情况")
+                    bot.sendMessage(chat_id, "/shell -字面意思")
+                    bot.sendMessage(chat_id, "/memgraph -绘制近一段时间的内存使用记录表")
+                    bot.sendMessage(chat_id, "/setmem -设置内存占用告警阈值，并在占用情况高于这个值是告警")
+                    bot.sendMessage(chat_id, "/setpoll -设置探测间隔（不少于10秒）")
+                    bot.sendMessage(chat_id, "/stop -AZ5")
                 elif msg['text'] == "Stop":
                     clearall(chat_id)
-                    bot.sendMessage(chat_id, "All operations stopped.", reply_markup=hide_keyboard)
+                    bot.sendMessage(chat_id, "所有操作已经停止了", reply_markup=hide_keyboard)
                 elif msg['text'] == '/setpoll' and chat_id not in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     setpolling.append(chat_id)
-                    bot.sendMessage(chat_id, "Send me a new polling interval in seconds? (higher than 10)", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "发给我一个新的探测间隔（不少于10秒）", reply_markup=stopmarkup)
                 elif chat_id in setpolling:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
                         global poll
                         poll = int(msg['text'])
                         if poll > 10:
-                            bot.sendMessage(chat_id, "All set!")
+                            bot.sendMessage(chat_id, "整好了！")
                             clearall(chat_id)
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Please send a proper numeric value higher than 10.")
+                        bot.sendMessage(chat_id, "需要大于等于10秒，再来一次")
                 elif msg['text'] == "/shell" and chat_id not in shellexecution:
-                    bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "发给我一条命令以执行", reply_markup=stopmarkup)
                     shellexecution.append(chat_id)
                 elif msg['text'] == "/setmem" and chat_id not in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     settingmemth.append(chat_id)
-                    bot.sendMessage(chat_id, "Send me a new memory threshold to monitor?", reply_markup=stopmarkup)
+                    bot.sendMessage(chat_id, "发给我一个新的内存占用告警阈值？", reply_markup=stopmarkup)
                 elif chat_id in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     try:
                         global memorythreshold
                         memorythreshold = int(msg['text'])
                         if memorythreshold < 100:
-                            bot.sendMessage(chat_id, "All set!")
+                            bot.sendMessage(chat_id, "整好了！")
                             clearall(chat_id)
                         else:
                             1/0
                     except:
-                        bot.sendMessage(chat_id, "Please send a proper numeric value below 100.")
+                        bot.sendMessage(chat_id, "都说了要小于100啊")
 
                 elif chat_id in shellexecution:
                     bot.sendChatAction(chat_id, 'typing')
@@ -151,7 +159,7 @@ class YourBot(telepot.Bot):
                     if output != b'':
                         bot.sendMessage(chat_id, output, disable_web_page_preview=True)
                     else:
-                        bot.sendMessage(chat_id, "No output.", disable_web_page_preview=True)
+                        bot.sendMessage(chat_id, "没有输出", disable_web_page_preview=True)
                 elif msg['text'] == '/memgraph':
                     bot.sendChatAction(chat_id, 'typing')
                     tmperiod = "Last %.2f hours" % ((datetime.now() - graphstart).total_seconds() / 3600)
@@ -184,11 +192,11 @@ while 1:
             memlist.append(mempercent)
         memfree = memck.available / 1000000
         if mempercent > memorythreshold:
-            memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
+            memavail = "可用内存: %.2f GB" % (memck.available / 1000000000)
             graphend = datetime.now()
-            tmperiod = "Last %.2f hours" % ((graphend - graphstart).total_seconds() / 3600)
+            tmperiod = "近 %.2f 小时" % ((graphend - graphstart).total_seconds() / 3600)
             for adminid in adminchatid:
-                bot.sendMessage(adminid, "CRITICAL! LOW MEMORY!\n" + memavail)
+                bot.sendMessage(adminid, "换个大内存服务器吧\n" + memavail)
                 bot.sendPhoto(adminid, plotmemgraph(memlist, xaxis, tmperiod))
     time.sleep(10)  # 10 seconds
     tr += 10
