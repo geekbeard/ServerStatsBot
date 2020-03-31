@@ -105,7 +105,7 @@ class YourBot(telepot.Bot):
                             diskused + "\n\n" + \
                             pidsreply
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
-                elif msg['text'] == "help" or msg['text'] == "help" or msg['text'] == "/start":
+                elif msg['text'] == "help" or msg['text'] == "/help" or msg['text'] == "/start":
                     bot.sendMessage(chat_id, "以下命令可用")
                     bot.sendMessage(chat_id, "/stats -检查磁盘/CPU/内存使用情况")
                     bot.sendMessage(chat_id, "/shell -字面意思")
