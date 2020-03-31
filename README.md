@@ -2,6 +2,8 @@
 
 原项目详见fork源，您正在看的这个repo某种意义上属于二开版，Working in progress之后是原readme的完整翻译，也可以当做部署教程，实际上，这个repo只是比原repo维护+新功能+汉化。
 
+这个repo已经提交给四年没有上线的开发者，为了防止新功能冲突，我新建了一个repo[链接](https://github.com/iamydp/ServerMonitorBot)，以后更新在这里了，本repo不做任何改动。
+
 2020-3-31新增
 
 输入/start或/help或help时回复所有可用的命令。（虽然在向@botfather添加命令过后这个显得有点多余）
