@@ -78,7 +78,7 @@ Working in Progress
     * 根据文件内注释指示更改路径
 * 将`servstatsbot.conf`放在`/etc/init/`内
 * 用该命令启动进程: `start servstatsbot`
-    * 之后,以下命令将可用：`service servstatsbot start|stop|restart`
+    * 之后,以下命令将可用：`start|stop|restart servstatsbot`
     * 如果进程崩溃将会自动重启
     * 开机启动
 
