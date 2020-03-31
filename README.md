@@ -69,6 +69,7 @@
 * `adminchatid = [443355, 55667788, 99884433]`
 
 之后我将会重新编写这块的代码
+
 译者按：这句话是原作者写的,我没说过        
  
 # 欢迎一键三连 XD
@@ -83,6 +84,7 @@
  
 ## Alfred
 [http://alfredthebot.com](http://alfredthebot.com)
+
 译者按：已404
  
  
