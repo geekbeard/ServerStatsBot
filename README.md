@@ -2,7 +2,7 @@
 
 原项目详见fork源，您正在看的这个repo某种意义上属于二开版，Working in progress之后是原readme的完整翻译，也可以当做部署教程，实际上，这个repo只是比原repo维护+新功能+汉化。
 
-后续更新请看[这里](https://github.com/iamydp/ServerMonitorBot)
+后续更新请看[这里](https://github.com/iamydp/ServerMonitorBot),此版本不做后续维护
 
 2020-3-31新增
 
