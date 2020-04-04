@@ -1,5 +1,7 @@
 # A token you get from the Telegram's botfather
+# 这边填入从@botfather 处取得的token
 telegrambot = '9999999:6666aaaaaa666666a6aaa'
 
 # A chat_id of your client
+# 这边填入管理员的chat_id
 adminchatid = [99999999]
