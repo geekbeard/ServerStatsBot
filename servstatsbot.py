@@ -7,6 +7,7 @@ from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 import operator
 import collections
+import socket
 # import sys
 import time
 # import threading
@@ -15,7 +16,7 @@ import telepot
 # from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardHide, ForceReply
 # from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 # from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
-
+from requests import get
 
 
 memorythreshold = 85  # If memory usage more this %
@@ -76,10 +77,16 @@ class YourBot(telepot.Bot):
                     disk = psutil.disk_usage('/')
                     boottime = datetime.fromtimestamp(psutil.boot_time())
                     now = datetime.now()
+                    host_name = socket.gethostname()
+                    host_ip = socket.gethostbyname(host_name + ".local")
+                    ip = get('https://api.ipify.org').text
                     timedif = "Online for: %.1f Hours" % (((now - boottime).total_seconds()) / 3600)
+                    orario = "TimeSystem: " + now.strftime("%d/%m/%Y; %H:%M:%S")
                     memtotal = "Total memory: %.2f GB " % (memory.total / 1000000000)
                     memavail = "Available memory: %.2f GB" % (memory.available / 1000000000)
                     memuseperc = "Used memory: " + str(memory.percent) + " %"
+                    localip = "Local IP: " + str (host_ip)                                
+                    publicip = ('My public IP address is: {}'.format(ip))
                     diskused = "Disk used: " + str(disk.percent) + " %"
                     pids = psutil.pids()
                     pidsreply = ''
@@ -99,9 +106,12 @@ class YourBot(telepot.Bot):
                     for proc in sortedprocs:
                         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
                     reply = timedif + "\n" + \
+                            orario + "\n" + \
                             memtotal + "\n" + \
                             memavail + "\n" + \
                             memuseperc + "\n" + \
+                            localip + "\n" + \
+                            publicip + "\n" + \
                             diskused + "\n\n" + \
                             pidsreply
                     bot.sendMessage(chat_id, reply, disable_web_page_preview=True)
@@ -124,9 +134,9 @@ class YourBot(telepot.Bot):
                             1/0
                     except:
                         bot.sendMessage(chat_id, "Please send a proper numeric value higher than 10.")
-                elif msg['text'] == "/shell" and chat_id not in shellexecution:
-                    bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
-                    shellexecution.append(chat_id)
+#                elif msg['text'] == "/shell" and chat_id not in shellexecution:
+#                    bot.sendMessage(chat_id, "Send me a shell command to execute", reply_markup=stopmarkup)
+#                    shellexecution.append(chat_id)
                 elif msg['text'] == "/setmem" and chat_id not in settingmemth:
                     bot.sendChatAction(chat_id, 'typing')
                     settingmemth.append(chat_id)
